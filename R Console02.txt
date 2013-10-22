@@ -1,0 +1,1070 @@
+
+R version 3.0.1 (2013-05-16) -- "Good Sport"
+Copyright (C) 2013 The R Foundation for Statistical Computing
+Platform: x86_64-apple-darwin10.8.0 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+[R.app GUI 1.61 (6492) x86_64-apple-darwin10.8.0]
+
+[History restored from /Users/chelsimoy/.Rapp.history]
+
+> setwd("~/dataviz-fall-2013/data-wild/")
+> data <- read.csv("county-data.csv")
+> 
+> #adds a county column by splitting in front of the parenthesis
+> data$county <- sapply(strsplit(as.character(data$ACCOMACK.VA.), split="\\("), function(x) { x[1] })
+> 
+> #adds a state column by splitting after the parenthesis
+> data$state <- sapply(strsplit(as.character(data$ACCOMACK.VA.), split="\\("), function(x) { x[2] })
+> 
+> #resplit the state data to get rid of the parenthesis sign at the end
+> data$state <- sapply(strsplit(as.character(data$state), split="\\)"), function(x) { x[1] })
+> 
+> #getting data for each state
+> get_state_data <- function(mystate) {this_state_data <- subset(data, state == mystate) }
+> 
+> data$guns <- as.numeric(gsub("\\,","", data$X1))
+> 
+> guns_state <- aggregate(data$guns, list(data$state), sum)
+> 
+> barplot(guns_state$x, ylab="Number of Guns", xlab="States")
+> guns_state[order(guns_state$x, decreasing=True)]
+Error in order(guns_state$x, decreasing = True) : object 'True' not found
+> guns_state[order(guns_state$x, decreasing=true)]
+Error in order(guns_state$x, decreasing = true) : object 'true' not found
+> guns_state[order(guns_state$x, decreasing=true),]
+Error in order(guns_state$x, decreasing = true) : object 'true' not found
+> guns_state[order(guns_state$x, decreasing=TRUE),]
+   Group.1     x
+16      IL 22051
+17      IN  7747
+27      MS  4296
+51      WI  1647
+19      KY  1226
+37      OH  1121
+45      TN  1090
+2       AL  1070
+3       AR   945
+46      TX   937
+11      GA   933
+24      MI   679
+10      FL   673
+20      LA   529
+5       CA   526
+25      MN   474
+14      IA   397
+4       AZ   355
+26      MO   344
+29      NC   295
+48      VA   268
+38      OK   207
+52      WV   202
+6       CO   187
+40      PA   181
+18      KS   177
+50      WA   156
+43      SC   152
+21      MA   108
+31      NE   104
+35      NV   103
+36      NY    97
+34      NM    75
+28      MT    53
+47      UT    53
+22      MD    50
+7       CT    46
+39      OR    40
+15      ID    39
+44      SD    36
+1       AK    33
+30      ND    31
+53      WY    29
+33      NJ    21
+23      ME    18
+32      NH    14
+9       DE    10
+13      HI     8
+41      PR     5
+42      RI     5
+49      VT     4
+8       DC     2
+12      GU     2
+> barplot(guns_state$x, ylab="Number of Guns", xlab="States")
+> 
+> barplot(guns_state$x, ylab="Number of Guns", xlab="States")
+> 
+> barplot(guns_state$x, ylab="Number of Guns", xlab="States")
+> guns_state <- guns_state[order(guns_state$x, decreasing=True)]
+Error in order(guns_state$x, decreasing = True) : object 'True' not found
+> guns_state <- guns_state[order(guns_state$x, decreasing=TRUE)]
+Error in `[.data.frame`(guns_state, order(guns_state$x, decreasing = TRUE)) : 
+  undefined columns selected
+> guns_state <- guns_state[order(guns_state$x, decreasing=TRUE),]
+> barplot(guns_state$x, ylab="Number of guns", xlab="States")
+> barcolors <- ifelse(guns_state == "Illinois", "red", "lightgrey")
+> barplot(guns_state$x, col=barcolors, border=F, main="Guns in America", ylab="Number of guns", xlab="States")
+> barcolors <- ifelse(guns_state == "IL", "red", "lightgrey")
+> 
+> barcolors <- ifelse(guns_state$x == "IL", "red", "lightgrey")
+> guns_state <- Group.1[order(guns_state$x),]
+Error: object 'Group.1' not found
+> Group.1 <- guns_state$Group.1
+> guns_state <- Group.1[order(guns_state$x),]
+Error in Group.1[order(guns_state$x), ] : incorrect number of dimensions
+> barcolors <- ifelse(guns_state$Group.1 == "IL", "red", "lightgrey")
+> 
+> barplot(guns_state$x, col=barcolors, border=F, main="Guns in America", ylab="Number of guns", xlab="States", decreasing=FALSE)
+Warning messages:
+1: In plot.window(xlim, ylim, log = log, ...) :
+  "decreasing" is not a graphical parameter
+2: In title(main = main, sub = sub, xlab = xlab, ylab = ylab, ...) :
+  "decreasing" is not a graphical parameter
+3: In axis(if (horiz) 1 else 2, cex.axis = cex.axis, ...) :
+  "decreasing" is not a graphical parameter
+> text(guns_state$Group.1, adj=c(.5, NA), labels=guns_state$Group.1, col="blue", cex=.5)
+Warning message:
+In xy.coords(x, y, recycle = TRUE) : NAs introduced by coercion
+> text(guns_state$Group.1, labels=guns_state$Group.1, col="blue", cex=.5)
+Warning message:
+In xy.coords(x, y, recycle = TRUE) : NAs introduced by coercion
+> text(guns_state$x, labels=guns_state$Group.1, col="blue", cex=.5)
+> text(guns_state$x, labels=guns_state$Group.1, col="blue", cex=.7)
+> barplot(guns_state$x, col=barcolors, border=F, main="Guns in America", ylab="Number of guns", xlab="States", decreasing=FALSE)
+Warning messages:
+1: In plot.window(xlim, ylim, log = log, ...) :
+  "decreasing" is not a graphical parameter
+2: In title(main = main, sub = sub, xlab = xlab, ylab = ylab, ...) :
+  "decreasing" is not a graphical parameter
+3: In axis(if (horiz) 1 else 2, cex.axis = cex.axis, ...) :
+  "decreasing" is not a graphical parameter
+> text(guns_state$x, labels=guns_state$Group.1, col="blue", cex=.7)
+> barplot(guns_state$x, col=barcolors, border=F, main="Guns in America", ylab="Number of guns", xlab="States")
+Warning messages:
+1: "decreasing" is not a graphical parameter 
+2: "decreasing" is not a graphical parameter 
+3: "decreasing" is not a graphical parameter 
+> guns_state <- guns_state[order(guns_state$x),]
+> barplot(guns_state$x, col=barcolors, border=F, main="Guns in America", ylab="Number of guns", xlab="States")
+> barcolors <- ifelse(guns_state$Group.1 == "IL", "red", "lightgrey")
+> barplot(guns_state$x, col=barcolors, border=F, main="Guns in America", ylab="Number of guns", xlab="States")
+> text(guns_state$x, labels=guns_state$Group.1, col="blue", cex=.7)
+> install.packages("maptools")
+--- Please select a CRAN mirror for use in this session ---
+trying URL 'http://streaming.stat.iastate.edu/CRAN/bin/macosx/contrib/3.0/maptools_0.8-27.tgz'
+Content type 'application/x-gzip' length 1685966 bytes (1.6 Mb)
+opened URL
+==================================================
+downloaded 1.6 Mb
+
+
+The downloaded binary packages are in
+	/var/folders/7m/plddkv853tg532crqjdcs8kw0000gn/T//Rtmp0VgwUi/downloaded_packages
+> shapes <-readShapePoly("nytlayout_state.shp")
+Error: could not find function "readShapePoly"
+> shapes <-readShapePoly("nytlayout_state_shape/nytlayout_state.shp")
+Error: could not find function "readShapePoly"
+> shapes <-read.shp("nytlayout_state_shape/nytlayout_state.shp")
+Error: could not find function "read.shp"
+> library(maptools)
+Loading required package: sp
+Checking rgeos availability: FALSE
+ 	Note: when rgeos is not available, polygon geometry 	computations in maptools depend on gpclib,
+ 	which has a restricted licence. It is disabled by default;
+ 	to enable gpclib, type gpclibPermit()
+> shapes <-readShapePoly("nytlayout_state_shape/nytlayout_state.shp")
+> install.package("RColorBrewer")
+Error: could not find function "install.package"
+> install.packages("RColorBrewer")
+trying URL 'http://streaming.stat.iastate.edu/CRAN/bin/macosx/contrib/3.0/RColorBrewer_1.0-5.tgz'
+Content type 'application/x-gzip' length 22725 bytes (22 Kb)
+opened URL
+==================================================
+downloaded 22 Kb
+
+
+The downloaded binary packages are in
+	/var/folders/7m/plddkv853tg532crqjdcs8kw0000gn/T//Rtmp0VgwUi/downloaded_packages
+lib
+> library(RColorBrewer)
+> plot(shapes)
+> map_data <- data.frame(shapes)
+> head(map_data)
+  STATE_NAME STATE_FIPS STATE_ABBR sfips
+0     Alaska         02         AK   s02
+1     Hawaii         15         HI   s15
+2    Alabama         01         AL   s01
+3   Arkansas         05         AR   s05
+4    Arizona         04         AZ   s04
+5 California         06         CA   s06
+> match(guns_state$Group.1, map_data$STATE_ABBR)
+ [1]  9 NA 47 NA 40  2 10 31 22 32 51 29  1 42 14 38  8 21 27 45 33 35 34 30 20 41 48 17 39  7 50 37 46 28 25  5 13 24  6 19 11 23 12 44  4
+[46]  3 43 36 18 49 26 16 15
+> match_order <- match(guns_state$Group.1, map_data$STATE_ABBR)
+> guns_state$STATE_ABBR
+NULL
+> map_data$guns <- guns_state$x[match_order]
+Error in `$<-.data.frame`(`*tmp*`, "guns", value = c(18, NA, 1090, NA,  : 
+  replacement has 53 rows, data has 51
+> match_order
+ [1]  9 NA 47 NA 40  2 10 31 22 32 51 29  1 42 14 38  8 21 27 45 33 35 34 30 20 41 48 17 39  7 50 37 46 28 25  5 13 24  6 19 11 23 12 44  4
+[46]  3 43 36 18 49 26 16 15
+> head(match_order)
+[1]  9 NA 47 NA 40  2
+> guns_state
+   Group.1     x
+8       DC     2
+12      GU     2
+49      VT     4
+41      PR     5
+42      RI     5
+13      HI     8
+9       DE    10
+32      NH    14
+23      ME    18
+33      NJ    21
+53      WY    29
+30      ND    31
+1       AK    33
+44      SD    36
+15      ID    39
+39      OR    40
+7       CT    46
+22      MD    50
+28      MT    53
+47      UT    53
+34      NM    75
+36      NY    97
+35      NV   103
+31      NE   104
+21      MA   108
+43      SC   152
+50      WA   156
+18      KS   177
+40      PA   181
+6       CO   187
+52      WV   202
+38      OK   207
+48      VA   268
+29      NC   295
+26      MO   344
+4       AZ   355
+14      IA   397
+25      MN   474
+5       CA   526
+20      LA   529
+10      FL   673
+24      MI   679
+11      GA   933
+46      TX   937
+3       AR   945
+2       AL  1070
+45      TN  1090
+37      OH  1121
+19      KY  1226
+51      WI  1647
+27      MS  4296
+17      IN  7747
+16      IL 22051
+> guns_state4 <- guns_state[-2]
+> guns_state4
+   Group.1
+8       DC
+12      GU
+49      VT
+41      PR
+42      RI
+13      HI
+9       DE
+32      NH
+23      ME
+33      NJ
+53      WY
+30      ND
+1       AK
+44      SD
+15      ID
+39      OR
+7       CT
+22      MD
+28      MT
+47      UT
+34      NM
+36      NY
+35      NV
+31      NE
+21      MA
+43      SC
+50      WA
+18      KS
+40      PA
+6       CO
+52      WV
+38      OK
+48      VA
+29      NC
+26      MO
+4       AZ
+14      IA
+25      MN
+5       CA
+20      LA
+10      FL
+24      MI
+11      GA
+46      TX
+3       AR
+2       AL
+45      TN
+37      OH
+19      KY
+51      WI
+27      MS
+17      IN
+16      IL
+> guns_state
+   Group.1     x
+8       DC     2
+12      GU     2
+49      VT     4
+41      PR     5
+42      RI     5
+13      HI     8
+9       DE    10
+32      NH    14
+23      ME    18
+33      NJ    21
+53      WY    29
+30      ND    31
+1       AK    33
+44      SD    36
+15      ID    39
+39      OR    40
+7       CT    46
+22      MD    50
+28      MT    53
+47      UT    53
+34      NM    75
+36      NY    97
+35      NV   103
+31      NE   104
+21      MA   108
+43      SC   152
+50      WA   156
+18      KS   177
+40      PA   181
+6       CO   187
+52      WV   202
+38      OK   207
+48      VA   268
+29      NC   295
+26      MO   344
+4       AZ   355
+14      IA   397
+25      MN   474
+5       CA   526
+20      LA   529
+10      FL   673
+24      MI   679
+11      GA   933
+46      TX   937
+3       AR   945
+2       AL  1070
+45      TN  1090
+37      OH  1121
+19      KY  1226
+51      WI  1647
+27      MS  4296
+17      IN  7747
+16      IL 22051
+> guns_state4 <- guns_state[-2,]
+> guns_state4
+   Group.1     x
+8       DC     2
+49      VT     4
+41      PR     5
+42      RI     5
+13      HI     8
+9       DE    10
+32      NH    14
+23      ME    18
+33      NJ    21
+53      WY    29
+30      ND    31
+1       AK    33
+44      SD    36
+15      ID    39
+39      OR    40
+7       CT    46
+22      MD    50
+28      MT    53
+47      UT    53
+34      NM    75
+36      NY    97
+35      NV   103
+31      NE   104
+21      MA   108
+43      SC   152
+50      WA   156
+18      KS   177
+40      PA   181
+6       CO   187
+52      WV   202
+38      OK   207
+48      VA   268
+29      NC   295
+26      MO   344
+4       AZ   355
+14      IA   397
+25      MN   474
+5       CA   526
+20      LA   529
+10      FL   673
+24      MI   679
+11      GA   933
+46      TX   937
+3       AR   945
+2       AL  1070
+45      TN  1090
+37      OH  1121
+19      KY  1226
+51      WI  1647
+27      MS  4296
+17      IN  7747
+16      IL 22051
+> guns_state4 <- guns_state[-3,]
+> guns_state4
+   Group.1     x
+8       DC     2
+12      GU     2
+41      PR     5
+42      RI     5
+13      HI     8
+9       DE    10
+32      NH    14
+23      ME    18
+33      NJ    21
+53      WY    29
+30      ND    31
+1       AK    33
+44      SD    36
+15      ID    39
+39      OR    40
+7       CT    46
+22      MD    50
+28      MT    53
+47      UT    53
+34      NM    75
+36      NY    97
+35      NV   103
+31      NE   104
+21      MA   108
+43      SC   152
+50      WA   156
+18      KS   177
+40      PA   181
+6       CO   187
+52      WV   202
+38      OK   207
+48      VA   268
+29      NC   295
+26      MO   344
+4       AZ   355
+14      IA   397
+25      MN   474
+5       CA   526
+20      LA   529
+10      FL   673
+24      MI   679
+11      GA   933
+46      TX   937
+3       AR   945
+2       AL  1070
+45      TN  1090
+37      OH  1121
+19      KY  1226
+51      WI  1647
+27      MS  4296
+17      IN  7747
+16      IL 22051
+> nrow(guns_state4)
+[1] 52
+> guns_state4 <- guns_state[-3,]
+> 
+> guns_state4
+   Group.1     x
+8       DC     2
+12      GU     2
+41      PR     5
+42      RI     5
+13      HI     8
+9       DE    10
+32      NH    14
+23      ME    18
+33      NJ    21
+53      WY    29
+30      ND    31
+1       AK    33
+44      SD    36
+15      ID    39
+39      OR    40
+7       CT    46
+22      MD    50
+28      MT    53
+47      UT    53
+34      NM    75
+36      NY    97
+35      NV   103
+31      NE   104
+21      MA   108
+43      SC   152
+50      WA   156
+18      KS   177
+40      PA   181
+6       CO   187
+52      WV   202
+38      OK   207
+48      VA   268
+29      NC   295
+26      MO   344
+4       AZ   355
+14      IA   397
+25      MN   474
+5       CA   526
+20      LA   529
+10      FL   673
+24      MI   679
+11      GA   933
+46      TX   937
+3       AR   945
+2       AL  1070
+45      TN  1090
+37      OH  1121
+19      KY  1226
+51      WI  1647
+27      MS  4296
+17      IN  7747
+16      IL 22051
+> guns_state4 <- guns_state4[-3,]
+> guns_state4
+   Group.1     x
+8       DC     2
+12      GU     2
+42      RI     5
+13      HI     8
+9       DE    10
+32      NH    14
+23      ME    18
+33      NJ    21
+53      WY    29
+30      ND    31
+1       AK    33
+44      SD    36
+15      ID    39
+39      OR    40
+7       CT    46
+22      MD    50
+28      MT    53
+47      UT    53
+34      NM    75
+36      NY    97
+35      NV   103
+31      NE   104
+21      MA   108
+43      SC   152
+50      WA   156
+18      KS   177
+40      PA   181
+6       CO   187
+52      WV   202
+38      OK   207
+48      VA   268
+29      NC   295
+26      MO   344
+4       AZ   355
+14      IA   397
+25      MN   474
+5       CA   526
+20      LA   529
+10      FL   673
+24      MI   679
+11      GA   933
+46      TX   937
+3       AR   945
+2       AL  1070
+45      TN  1090
+37      OH  1121
+19      KY  1226
+51      WI  1647
+27      MS  4296
+17      IN  7747
+16      IL 22051
+> nrow(guns_state4)
+[1] 51
+> guns_state4 <- guns_state[-3,]
+> guns_state4
+   Group.1     x
+8       DC     2
+12      GU     2
+41      PR     5
+42      RI     5
+13      HI     8
+9       DE    10
+32      NH    14
+23      ME    18
+33      NJ    21
+53      WY    29
+30      ND    31
+1       AK    33
+44      SD    36
+15      ID    39
+39      OR    40
+7       CT    46
+22      MD    50
+28      MT    53
+47      UT    53
+34      NM    75
+36      NY    97
+35      NV   103
+31      NE   104
+21      MA   108
+43      SC   152
+50      WA   156
+18      KS   177
+40      PA   181
+6       CO   187
+52      WV   202
+38      OK   207
+48      VA   268
+29      NC   295
+26      MO   344
+4       AZ   355
+14      IA   397
+25      MN   474
+5       CA   526
+20      LA   529
+10      FL   673
+24      MI   679
+11      GA   933
+46      TX   937
+3       AR   945
+2       AL  1070
+45      TN  1090
+37      OH  1121
+19      KY  1226
+51      WI  1647
+27      MS  4296
+17      IN  7747
+16      IL 22051
+> guns_state4 <- guns_state[-2,]
+> guns_state4
+   Group.1     x
+8       DC     2
+49      VT     4
+41      PR     5
+42      RI     5
+13      HI     8
+9       DE    10
+32      NH    14
+23      ME    18
+33      NJ    21
+53      WY    29
+30      ND    31
+1       AK    33
+44      SD    36
+15      ID    39
+39      OR    40
+7       CT    46
+22      MD    50
+28      MT    53
+47      UT    53
+34      NM    75
+36      NY    97
+35      NV   103
+31      NE   104
+21      MA   108
+43      SC   152
+50      WA   156
+18      KS   177
+40      PA   181
+6       CO   187
+52      WV   202
+38      OK   207
+48      VA   268
+29      NC   295
+26      MO   344
+4       AZ   355
+14      IA   397
+25      MN   474
+5       CA   526
+20      LA   529
+10      FL   673
+24      MI   679
+11      GA   933
+46      TX   937
+3       AR   945
+2       AL  1070
+45      TN  1090
+37      OH  1121
+19      KY  1226
+51      WI  1647
+27      MS  4296
+17      IN  7747
+16      IL 22051
+> guns_state5 <- guns_state4[-3,]
+> guns_state5
+   Group.1     x
+8       DC     2
+49      VT     4
+42      RI     5
+13      HI     8
+9       DE    10
+32      NH    14
+23      ME    18
+33      NJ    21
+53      WY    29
+30      ND    31
+1       AK    33
+44      SD    36
+15      ID    39
+39      OR    40
+7       CT    46
+22      MD    50
+28      MT    53
+47      UT    53
+34      NM    75
+36      NY    97
+35      NV   103
+31      NE   104
+21      MA   108
+43      SC   152
+50      WA   156
+18      KS   177
+40      PA   181
+6       CO   187
+52      WV   202
+38      OK   207
+48      VA   268
+29      NC   295
+26      MO   344
+4       AZ   355
+14      IA   397
+25      MN   474
+5       CA   526
+20      LA   529
+10      FL   673
+24      MI   679
+11      GA   933
+46      TX   937
+3       AR   945
+2       AL  1070
+45      TN  1090
+37      OH  1121
+19      KY  1226
+51      WI  1647
+27      MS  4296
+17      IN  7747
+16      IL 22051
+> nrow(guns_state5)
+[1] 51
+> match_order <- match(guns_state5$Group.1, map_data$STATE_ABBR)
+> map_data$guns <- guns_state5$x[match_order]
+> head(map_data)
+  STATE_NAME STATE_FIPS STATE_ABBR sfips guns
+0     Alaska         02         AK   s02   29
+1     Hawaii         15         HI   s15 1226
+2    Alabama         01         AL   s01  679
+3   Arkansas         05         AR   s05    4
+4    Arizona         04         AZ   s04   31
+5 California         06         CA   s06  268
+> match_order
+ [1]  9 47 40  2 10 31 22 32 51 29  1 42 14 38  8 21 27 45 33 35 34 30 20 41 48 17 39  7 50 37 46 28 25  5 13 24  6 19 11 23 12 44  4  3 43
+[46] 36 18 49 26 16 15
+> map_data
+             STATE_NAME STATE_FIPS STATE_ABBR sfips  guns
+0                Alaska         02         AK   s02    29
+1                Hawaii         15         HI   s15  1226
+2               Alabama         01         AL   s01   679
+3              Arkansas         05         AR   s05     4
+4               Arizona         04         AZ   s04    31
+5            California         06         CA   s06   268
+6              Colorado         08         CO   s08   104
+7           Connecticut         09         CT   s09   295
+8  District of Columbia         11         DC   s11 22051
+9              Delaware         10         DE   s10   202
+10              Florida         12         FL   s12     2
+11              Georgia         13         GA   s13   937
+12                 Iowa         19         IA   s19    40
+13                Idaho         16         ID   s16   529
+14             Illinois         17         IL   s17    21
+15              Indiana         18         IN   s18   103
+16               Kansas         20         KS   s20   181
+17             Kentucky         21         KY   s21  1090
+18            Louisiana         22         LA   s22   344
+19        Massachusetts         25         MA   s25   397
+20             Maryland         24         MD   s24   355
+21                Maine         23         ME   s23   207
+22             Michigan         26         MI   s26    97
+23            Minnesota         27         MN   s27   933
+24             Missouri         29         MO   s29  1647
+25          Mississippi         28         MS   s28    53
+26              Montana         30         MT   s30   673
+27       North Carolina         37         NC   s37    18
+28         North Dakota         38         ND   s38  7747
+29             Nebraska         31         NE   s31   526
+30        New Hampshire         33         NH   s33  1121
+31           New Jersey         34         NJ   s34   187
+32           New Mexico         35         NM   s35   156
+33               Nevada         32         NV   s32    10
+34             New York         36         NY   s36    39
+35                 Ohio         39         OH   s39   152
+36             Oklahoma         40         OK   s40    14
+37               Oregon         41         OR   s41    75
+38         Pennsylvania         42         PA   s42    33
+39         Rhode Island         44         RI   s44   108
+40       South Carolina         45         SC   s45    36
+41         South Dakota         46         SD   s46  1070
+42            Tennessee         47         TN   s47     8
+43                Texas         48         TX   s48     5
+44                 Utah         49         UT   s49   945
+45             Virginia         51         VA   s51   474
+46              Vermont         50         VT   s50    53
+47           Washington         53         WA   s53  4296
+48            Wisconsin         55         WI   s55   177
+49        West Virginia         54         WV   s54    50
+50              Wyoming         56         WY   s56    46
+> guns_state
+   Group.1     x
+8       DC     2
+12      GU     2
+49      VT     4
+41      PR     5
+42      RI     5
+13      HI     8
+9       DE    10
+32      NH    14
+23      ME    18
+33      NJ    21
+53      WY    29
+30      ND    31
+1       AK    33
+44      SD    36
+15      ID    39
+39      OR    40
+7       CT    46
+22      MD    50
+28      MT    53
+47      UT    53
+34      NM    75
+36      NY    97
+35      NV   103
+31      NE   104
+21      MA   108
+43      SC   152
+50      WA   156
+18      KS   177
+40      PA   181
+6       CO   187
+52      WV   202
+38      OK   207
+48      VA   268
+29      NC   295
+26      MO   344
+4       AZ   355
+14      IA   397
+25      MN   474
+5       CA   526
+20      LA   529
+10      FL   673
+24      MI   679
+11      GA   933
+46      TX   937
+3       AR   945
+2       AL  1070
+45      TN  1090
+37      OH  1121
+19      KY  1226
+51      WI  1647
+27      MS  4296
+17      IN  7747
+16      IL 22051
+> guns_state5
+   Group.1     x
+8       DC     2
+49      VT     4
+42      RI     5
+13      HI     8
+9       DE    10
+32      NH    14
+23      ME    18
+33      NJ    21
+53      WY    29
+30      ND    31
+1       AK    33
+44      SD    36
+15      ID    39
+39      OR    40
+7       CT    46
+22      MD    50
+28      MT    53
+47      UT    53
+34      NM    75
+36      NY    97
+35      NV   103
+31      NE   104
+21      MA   108
+43      SC   152
+50      WA   156
+18      KS   177
+40      PA   181
+6       CO   187
+52      WV   202
+38      OK   207
+48      VA   268
+29      NC   295
+26      MO   344
+4       AZ   355
+14      IA   397
+25      MN   474
+5       CA   526
+20      LA   529
+10      FL   673
+24      MI   679
+11      GA   933
+46      TX   937
+3       AR   945
+2       AL  1070
+45      TN  1090
+37      OH  1121
+19      KY  1226
+51      WI  1647
+27      MS  4296
+17      IN  7747
+16      IL 22051
+> match_order <- match(map_data$STATE_ABBR, guns_state5$Group.1)
+> map_data$guns <- guns_state5$x[match_order]
+> map_data
+             STATE_NAME STATE_FIPS STATE_ABBR sfips  guns
+0                Alaska         02         AK   s02    33
+1                Hawaii         15         HI   s15     8
+2               Alabama         01         AL   s01  1070
+3              Arkansas         05         AR   s05   945
+4               Arizona         04         AZ   s04   355
+5            California         06         CA   s06   526
+6              Colorado         08         CO   s08   187
+7           Connecticut         09         CT   s09    46
+8  District of Columbia         11         DC   s11     2
+9              Delaware         10         DE   s10    10
+10              Florida         12         FL   s12   673
+11              Georgia         13         GA   s13   933
+12                 Iowa         19         IA   s19   397
+13                Idaho         16         ID   s16    39
+14             Illinois         17         IL   s17 22051
+15              Indiana         18         IN   s18  7747
+16               Kansas         20         KS   s20   177
+17             Kentucky         21         KY   s21  1226
+18            Louisiana         22         LA   s22   529
+19        Massachusetts         25         MA   s25   108
+20             Maryland         24         MD   s24    50
+21                Maine         23         ME   s23    18
+22             Michigan         26         MI   s26   679
+23            Minnesota         27         MN   s27   474
+24             Missouri         29         MO   s29   344
+25          Mississippi         28         MS   s28  4296
+26              Montana         30         MT   s30    53
+27       North Carolina         37         NC   s37   295
+28         North Dakota         38         ND   s38    31
+29             Nebraska         31         NE   s31   104
+30        New Hampshire         33         NH   s33    14
+31           New Jersey         34         NJ   s34    21
+32           New Mexico         35         NM   s35    75
+33               Nevada         32         NV   s32   103
+34             New York         36         NY   s36    97
+35                 Ohio         39         OH   s39  1121
+36             Oklahoma         40         OK   s40   207
+37               Oregon         41         OR   s41    40
+38         Pennsylvania         42         PA   s42   181
+39         Rhode Island         44         RI   s44     5
+40       South Carolina         45         SC   s45   152
+41         South Dakota         46         SD   s46    36
+42            Tennessee         47         TN   s47  1090
+43                Texas         48         TX   s48   937
+44                 Utah         49         UT   s49    53
+45             Virginia         51         VA   s51   268
+46              Vermont         50         VT   s50     4
+47           Washington         53         WA   s53   156
+48            Wisconsin         55         WI   s55  1647
+49        West Virginia         54         WV   s54   202
+50              Wyoming         56         WY   s56    29
+> his(map_data$guns)
+Error: could not find function "his"
+> hist(map_data$guns)
+> map_breaks <- c(0, 50, 100, 250, 500, 750, 1000, 1250, 1500, 1750, 2000, 3000, 4000, 5000)
+> buckets <- cut(map_data$guns, breaks=map_breaks)
+> numeric_buckets <- as.numeric(buckets)
+> display.brewer.all()
+> map_breaks <- c(50, 100, 250, 500, 750, 1000, 1500, 2000, 5000)
+> buckets <- cut(map_data$guns, breaks=map_breaks)
+> numeric_buckets <- as.numeric(buckets)
+> colors <- brewer.pal(9, "Blues")
+> colors[numeric_buckets]
+ [1] NA        NA        "#4292C6" "#6BAED6" "#C6DBEF" "#9ECAE1" "#DEEBF7" NA        NA        NA        "#9ECAE1" "#6BAED6" "#C6DBEF"
+[14] NA        NA        NA        "#DEEBF7" "#4292C6" "#9ECAE1" "#DEEBF7" NA        NA        "#9ECAE1" "#C6DBEF" "#C6DBEF" "#08519C"
+[27] "#F7FBFF" "#C6DBEF" NA        "#DEEBF7" NA        NA        "#F7FBFF" "#DEEBF7" "#F7FBFF" "#4292C6" "#DEEBF7" NA        "#DEEBF7"
+[40] NA        "#DEEBF7" NA        "#4292C6" "#6BAED6" "#F7FBFF" "#C6DBEF" NA        "#DEEBF7" "#2171B5" "#DEEBF7" NA       
+> plot(shapes, col=color[numeric_buckets])
+Error in plot.SpatialPolygons(x, ...) : object 'color' not found
+> plot(shapes, col=colors[numeric_buckets])
+> map_breaks <- c(50, 100, 250, 500, 750, 1000, 1500, 2000, 25000)
+> buckets <- cut(map_data$guns, breaks=map_breaks)
+> numeric_buckets <- as.numeric(buckets)
+> plot(shapes, col=colors[numeric_buckets])
+> map_breaks <- c(0, 250, 500, 750, 1000, 1250, 1500, 2000, 25000)
+> buckets <- cut(map_data$guns, breaks=map_breaks)
+> numeric_buckets <- as.numeric(buckets)
+> plot(shapes, col=colors[numeric_buckets])
+> map_breaks <- c(50, 250, 500, 750, 1000, 1250, 1500, 2000, 25000)
+> buckets <- cut(map_data$guns, breaks=map_breaks)
+> numeric_buckets <- as.numeric(buckets)
+> display.brewer.all()
+> colors <- brewer.pal(9, "PuBuGn")
+> plot(shapes, col=colors[numeric_buckets])
+> display.brewer.all()
+> colors <- brewer.pal(9, "PuRd")
+> plot(shapes, col=colors[numeric_buckets])
+> map_breaks <- c(50, 100, 250, 500, 750, 1000, 1500, 2000, 25000)
+> plot(shapes, col=colors[numeric_buckets])
+> map_breaks <- c(0, 50, 100, 500, 750, 1000, 2500, 5000, 25000)
+> plot(shapes, col=colors[numeric_buckets])
+> display.brewer.all()
+> colors <- brewer.pal(9, "YIOrRd")
+Error in brewer.pal(9, "YIOrRd") : 
+  YIOrRd is not a valid palette name for brewer.pal
+> colors <- brewer.pal(9, "YlOrRd")
+> plot(shapes, col=colors[numeric_buckets])
+> colors <- brewer.pal(8, "YlOrRd")
+> plot(shapes, col=colors[numeric_buckets])
+> colors <- brewer.pal(7, "YlOrRd")
+> plot(shapes, col=colors[numeric_buckets])
+> colors <- brewer.pal(8, "YlOrRd")
+> plot(shapes, col=colors[numeric_buckets])
+> map_breaks <- c(0, 50, 100, 250, 500, 750, 1000, 2500, 5000, 25000)
+> buckets <- cut(map_data$guns, breaks=map_breaks)
+> numeric_buckets <- as.numeric(buckets)
+> plot(shapes, col=colors[numeric_buckets])
+> colors <- brewer.pal(9, "YlOrRd")
+> plot(shapes, col=colors[numeric_buckets])
+> title("Gun traces in Chicago over the past decade")
+> 

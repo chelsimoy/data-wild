@@ -1,0 +1,82 @@
+setwd("~dataviz-fall-2013/data-wild")
+setwd("~/dataviz-fall-2013/data-wild")
+data <- read.csv("county-data.csv")
+head(data)
+names(data)
+nrow(data)
+guns <- subset(data, data$X1)
+avg(data)
+s <- split(data$data, list(data$names),)
+s <- split(data$ACCOMACK.VA, list(data$names),)
+s <- split(data$ACCOMACK.VA, list(data$ACCOMACK.VA),)
+s(data)
+head(data)
+as.numeric(gsub(",", "", data$ACCOMACK.VA))
+head(data)
+state <- split(data, data$ACCOMACK.VA)
+state(data)
+state$data <- data.frame(ACCOMACK.VA)data$county <- sapply(strsplit(as.character(data$ACCOMACK.VA.), split="\\("), function(x) { x[1] })
+data$state <- sapply(strsplit(as.character(data$ACCOMACK.VA.), split="\\("), function(x) { x[2] })
+head(data)
+data$state <- sapply(strsplit(as.character(data$state.), split="\\)"), function(x) { x[1] })
+data$state <- sapply(strsplit(as.character(data$state), split="\\)"), function(x) { x[1] })
+head(data)
+data$county <- sapply(strsplit(as.character(data$ACCOMACK.VA.), split="\\("), function(x) { x[1] })
+head(data)
+guns <- X1[order(data$ACCOMACK.VA, decreasing=T)]
+guns <- X1[order(data$X1, decreasing=T)]
+guns <- data$X1
+guns <- guns[order(data$guns, decreasing=T)]
+data$X1
+head(guns)
+avg(guns)
+tail(guns)
+guns <- guns[order(data$guns, increasing=T)]
+data$guns <- guns[order(guns, decreasing=T),]
+data$guns <- order(guns, decreasing=T),]
+data$guns <- order(guns, decreasing=T)]
+data$guns <- order(guns, decreasing=T)
+head(data$guns)
+data$guns
+plot(data$guns)
+plot(data$guns, data$state, type="l", col="red")
+barplot(data$guns, data$state)
+barplot(data$guns)
+barplot(data$guns, data$county)
+names(data)
+max(guns)
+data$guns <- as.numeric(data$guns)
+max(guns)
+head(guns)
+head(data)
+adair_ky <- subset(data, data$ACCOMACK.VA == "ADAIR(KY)")
+head(adair_ky)
+data.guns <- as.numeric(as.character(data$X1))
+head(data)
+data.guns <- as.numeric(as.character(data$X1))
+head(data)
+data$guns <- as.numeric(as.character(data$X1))
+head(data)
+data$guns <- data$guns[order(data$guns, decreasing=T),]
+head(data$guns)
+avg(data$guns)
+mt <- aggregate(data[, c(data$guns, data$county)])
+aggMt <- aggregate(data$guns, list(data$state), sum)
+head(aggMt)
+guns_state <- aggregate(data$guns, list(data$state), sum)
+guns_state
+barplot(guns_state)
+plot(guns_state)
+plot(guns_state, type"l", col="red")
+as.numeric(gsub(",","", data$X1))#
+data$X1 <- as.numeric(gsub(",","", data$X1))
+head(data)
+head(gun_state)
+guns_state
+data$guns <- as.numeric(gsub(",","", data$X1))
+guns_state
+guns_state <- aggregate(data$guns, list(data$state), sum)
+guns_state
+barplot(guns_state)
+barplot(guns_state$x)
+barplot(guns_state$x, ylab="Number of guns discovered", xlab="states")
